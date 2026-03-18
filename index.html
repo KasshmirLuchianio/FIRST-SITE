@@ -775,13 +775,17 @@
       .nav-mobile-toggle { display: flex; }
 
       #hero { padding: 80px 20px 20px; grid-template-columns: 1fr; min-height: auto; gap: 0; }
-      .hero-content { text-align: center; order: 1; align-items: center; }
-      .hero-socials { justify-content: center; margin-top: 16px; }
+      .hero-content { text-align: center; order: 1; align-items: center; width: 100%; display: flex; flex-direction: column; align-items: center; }
       .hero-3d-wrapper { min-height: 250px; max-height: 270px; order: 0; margin-bottom: 0; overflow: hidden; }
-      .hero-title-img { max-width: 260px; margin: 0 auto 0; }
+
+      /* GIGI GAZON font image — centered & proportional */
+      .hero-title-img { max-width: 300px; width: 80%; margin: 0 auto 20px; display: flex; justify-content: center; }
       .hero-title { font-size: clamp(3rem, 12vw, 5rem); }
-      .hero-socials { gap: 10px; }
-      .social-btn { padding: 10px 16px; font-size: 0.75rem; }
+
+      /* Social badges — centered grid */
+      .hero-socials { display: flex; justify-content: center; align-items: center; gap: 12px; margin: 8px auto 0; width: 100%; max-width: 320px; flex-wrap: wrap; }
+      .social-btn { padding: 12px; font-size: 0; width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; }
+      .social-btn svg, .social-btn img { width: 22px; height: 22px; }
       .social-btn .social-text { display: none; }
 
       .album-includes { grid-template-columns: 1fr; }
