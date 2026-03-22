@@ -1419,23 +1419,29 @@
       prevDragY = e.clientY;
     }, { passive: true });
 
-    // Touch support
-    canvas.addEventListener('touchstart', (e) => {
-      isDragging = true;
-      prevDragX = e.touches[0].clientX;
-      prevDragY = e.touches[0].clientY;
-    }, { passive: true });
-    canvas.addEventListener('touchend', () => { isDragging = false; }, { passive: true });
-    canvas.addEventListener('touchmove', (e) => {
-      if (!isDragging) return;
-      const dx = e.touches[0].clientX - prevDragX;
-      const dy = e.touches[0].clientY - prevDragY;
-      dragRotY += dx * 0.008;
-      dragRotX += dy * 0.005;
-      dragRotX = Math.max(-0.8, Math.min(0.8, dragRotX));
-      prevDragX = e.touches[0].clientX;
-      prevDragY = e.touches[0].clientY;
-    }, { passive: true });
+    // Touch support — only on desktop, disabled on mobile to not block scrolling
+    if (window.innerWidth > 768) {
+      canvas.addEventListener('touchstart', (e) => {
+        isDragging = true;
+        prevDragX = e.touches[0].clientX;
+        prevDragY = e.touches[0].clientY;
+      }, { passive: true });
+      canvas.addEventListener('touchend', () => { isDragging = false; }, { passive: true });
+      canvas.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        const dx = e.touches[0].clientX - prevDragX;
+        const dy = e.touches[0].clientY - prevDragY;
+        dragRotY += dx * 0.008;
+        dragRotX += dy * 0.005;
+        dragRotX = Math.max(-0.8, Math.min(0.8, dragRotX));
+        prevDragX = e.touches[0].clientX;
+        prevDragY = e.touches[0].clientY;
+      }, { passive: true });
+    }
+    // On mobile, disable pointer events on canvas so scroll works
+    if (window.innerWidth <= 768) {
+      canvas.style.pointerEvents = 'none';
+    }
 
     canvas.style.cursor = 'grab';
 
