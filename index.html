@@ -135,11 +135,14 @@
       background: transparent;
     }
     .nav-logo {
-      font-family: var(--font-heading);
-      font-size: 2rem;
-      color: var(--accent);
       text-decoration: none;
-      letter-spacing: 3px;
+      display: flex;
+      align-items: center;
+    }
+    .nav-logo img {
+      height: 38px;
+      width: auto;
+      object-fit: contain;
     }
     .nav-links {
       display: flex;
@@ -156,15 +159,18 @@
     }
     .nav-links a:hover { color: var(--text-primary); }
     .nav-cta-btn {
-      font-family: var(--font-heading);
-      font-size: 2rem;
-      color: var(--accent);
       text-decoration: none;
-      letter-spacing: 3px;
+      display: flex;
+      align-items: center;
       transition: all 0.3s ease;
     }
+    .nav-cta-btn img {
+      height: 38px;
+      width: auto;
+      object-fit: contain;
+    }
     .nav-cta-btn:hover {
-      text-shadow: 0 0 20px rgba(var(--accent-rgb), 0.5);
+      filter: drop-shadow(0 0 12px rgba(var(--accent-rgb), 0.5));
     }
     #navbar.scrolled .nav-inner {
       max-width: 800px;
@@ -911,13 +917,13 @@
   <!-- NAVBAR -->
   <nav id="navbar">
     <div class="nav-inner">
-      <a href="#" class="nav-logo">KASHMIR</a>
+      <a href="#" class="nav-logo"><img src="assets/kashmir-balloon.png" alt="KASHMIR" style="height: 38px; width: auto; vertical-align: middle;"></a>
       <div class="nav-links">
         <a href="#hero">Acasa</a>
         <a href="#tracklist">Tracklist</a>
         <a href="#muzica">Muzica</a>
       </div>
-      <a href="#album" class="nav-cta-btn">LUCHIANO</a>
+      <a href="#album" class="nav-cta-btn"><img src="assets/luchiano-balloon.png" alt="LUCHIANO" style="height: 38px; width: auto; vertical-align: middle;"></a>
       <button class="nav-mobile-toggle" aria-label="Menu" id="menuToggle">
         <span></span><span></span><span></span>
       </button>
