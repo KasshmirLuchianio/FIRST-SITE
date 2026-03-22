@@ -102,11 +102,11 @@
       text-decoration: none;
       display: flex;
       align-items: center;
-    }
-    .nav-logo img {
-      height: 55px;
-      width: auto;
-      object-fit: contain;
+      font-family: var(--font-heading);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: 3px;
     }
     .nav-links {
       display: flex;
@@ -127,14 +127,14 @@
       display: flex;
       align-items: center;
       transition: all 0.3s ease;
-    }
-    .nav-cta-btn img {
-      height: 55px;
-      width: auto;
-      object-fit: contain;
+      font-family: var(--font-heading);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: 3px;
     }
     .nav-cta-btn:hover {
-      filter: drop-shadow(0 0 12px rgba(var(--accent-rgb), 0.5));
+      color: var(--accent);
     }
     #navbar.scrolled .nav-inner {
       max-width: 800px;
@@ -943,13 +943,13 @@
   <!-- NAVBAR -->
   <nav id="navbar">
     <div class="nav-inner">
-      <a href="#" class="nav-logo"><img src="assets/kashmir-balloon.png" alt="KASHMIR"></a>
+      <a href="#" class="nav-logo">KASHMIR</a>
       <div class="nav-links">
         <a href="#hero">Acasa</a>
         <a href="#tracklist">Tracklist</a>
         <a href="#muzica">Muzica</a>
       </div>
-      <a href="#album" class="nav-cta-btn"><img src="assets/luchiano-balloon.png" alt="LUCHIANO"></a>
+      <a href="#album" class="nav-cta-btn">LUCHIANO</a>
       <button class="nav-mobile-toggle" aria-label="Menu" id="menuToggle">
         <span></span><span></span><span></span>
       </button>
