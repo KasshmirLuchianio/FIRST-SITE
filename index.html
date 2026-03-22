@@ -611,6 +611,17 @@
       gap: 2px;
       margin-bottom: 80px;
     }
+    .track-img {
+      height: 70px;
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 8px rgba(0,150,255,0.2));
+      transition: transform 0.3s ease, filter 0.3s ease;
+    }
+    .track-item:hover .track-img {
+      transform: scale(1.05);
+      filter: drop-shadow(0 4px 16px rgba(0,150,255,0.4));
+    }
     .track-item {
       display: flex;
       align-items: center;
@@ -1005,17 +1016,17 @@
       <img src="assets/balloon-gigi-gazon.png" alt="GIGI GAZON" class="balloon-title">
     </div>
     <div class="track-list">
-      <div class="track-item"><div class="track-number">01</div><div class="track-info"><div class="track-name">La Familia</div></div></div>
+      <div class="track-item"><img src="assets/track-01-la-familia.png" alt="1. La Familia" class="track-img"></div>
       <div class="track-divider"></div>
-      <div class="track-item"><div class="track-number">02</div><div class="track-info"><div class="track-name">Iran</div></div></div>
+      <div class="track-item"><img src="assets/track-02-iran.png" alt="2. Iran" class="track-img"></div>
       <div class="track-divider"></div>
-      <div class="track-item"><div class="track-number">03</div><div class="track-info"><div class="track-name">Milioane</div></div></div>
+      <div class="track-item"><img src="assets/track-03-milioane.png" alt="3. Milioane" class="track-img"></div>
       <div class="track-divider"></div>
-      <div class="track-item"><div class="track-number">04</div><div class="track-info"><div class="track-name">La Moda</div></div></div>
+      <div class="track-item"><img src="assets/track-04-la-moda.png" alt="4. La Moda" class="track-img"></div>
       <div class="track-divider"></div>
-      <div class="track-item"><div class="track-number">05</div><div class="track-info"><div class="track-name">Five Guys</div></div></div>
+      <div class="track-item"><img src="assets/track-05-five-guys.png" alt="5. Five Guys" class="track-img"></div>
       <div class="track-divider"></div>
-      <div class="track-item"><div class="track-number">06</div><div class="track-info"><div class="track-name">BRR</div></div></div>
+      <div class="track-item"><img src="assets/track-06-brr.png" alt="6. BRR" class="track-img"></div>
       <div class="track-divider"></div>
       <div class="track-item"><div class="track-number">07</div><div class="track-info"><div class="track-name">Lonely</div></div></div>
       <div class="track-divider"></div>
