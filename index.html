@@ -251,6 +251,9 @@
       display: block;
       filter: drop-shadow(0 4px 20px rgba(0,0,0,0.5));
     }
+    .hero-separator {
+      display: none;
+    }
     .hero-artist-name {
       display: none;
     }
@@ -860,6 +863,7 @@
       #hero { padding: 80px 20px 20px; grid-template-columns: 1fr; min-height: auto; gap: 0; }
       .hero-content { text-align: center; order: 1; width: 100%; display: flex; flex-direction: column; align-items: center; padding-left: 0; padding-right: 0; margin: 0 auto; }
       .hero-3d-wrapper { min-height: 250px; max-height: 270px; order: 0; margin-bottom: 0; overflow: hidden; }
+      .hero-separator { display: block; order: 0; width: 100%; height: 1px; background: rgba(255,255,255,0.15); margin: 16px 0; }
 
       /* GIGI GAZON font image — centered & proportional */
       .hero-title-img { max-width: 300px; width: 80%; margin: 0 auto 20px; display: flex; justify-content: center; }
@@ -994,6 +998,7 @@
         </a>
       </div>
     </div>
+    <div class="hero-separator"></div>
     <div class="hero-3d-wrapper">
       <canvas id="hero3d"></canvas>
     </div>
