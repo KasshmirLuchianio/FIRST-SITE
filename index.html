@@ -533,70 +533,15 @@
       overflow: hidden;
       background: #000;
     }
-    /* Blue vertical light bars — dramatic stage lighting */
-    .tracklist-bg {
+    /* Blue vertical light bars — canvas rendered */
+    .tracklist-bars-canvas {
       position: absolute;
       inset: 0;
+      width: 100%;
+      height: 100%;
       z-index: 0;
       pointer-events: none;
-      overflow: hidden;
-    }
-    /* Layer 1: Bold wide bars */
-    .tracklist-bg::before {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0;
-      width: 100%; height: 100%;
-      background:
-        linear-gradient(0deg, rgba(20,60,255,0.7) 0%, rgba(20,60,255,0) 70%) 5% 0/3% 100% no-repeat,
-        linear-gradient(0deg, rgba(30,80,255,0.8) 0%, rgba(30,80,255,0) 75%) 10% 0/4% 100% no-repeat,
-        linear-gradient(0deg, rgba(15,50,220,0.5) 0%, rgba(15,50,220,0) 60%) 16% 0/2.5% 100% no-repeat,
-        linear-gradient(0deg, rgba(40,100,255,0.9) 0%, rgba(40,100,255,0) 80%) 22% 0/5% 100% no-repeat,
-        linear-gradient(0deg, rgba(25,70,240,0.6) 0%, rgba(25,70,240,0) 65%) 28% 0/3% 100% no-repeat,
-        linear-gradient(0deg, rgba(50,110,255,0.85) 0%, rgba(50,110,255,0) 78%) 34% 0/4.5% 100% no-repeat,
-        linear-gradient(0deg, rgba(20,60,230,0.55) 0%, rgba(20,60,230,0) 55%) 39% 0/2% 100% no-repeat,
-        linear-gradient(0deg, rgba(60,130,255,0.95) 0%, rgba(60,130,255,0) 85%) 44% 0/6% 100% no-repeat,
-        linear-gradient(0deg, rgba(35,90,255,0.75) 0%, rgba(35,90,255,0) 72%) 50% 0/4% 100% no-repeat,
-        linear-gradient(0deg, rgba(45,105,255,0.9) 0%, rgba(45,105,255,0) 80%) 55% 0/5% 100% no-repeat,
-        linear-gradient(0deg, rgba(20,55,220,0.5) 0%, rgba(20,55,220,0) 58%) 61% 0/2.5% 100% no-repeat,
-        linear-gradient(0deg, rgba(55,120,255,0.85) 0%, rgba(55,120,255,0) 76%) 66% 0/4% 100% no-repeat,
-        linear-gradient(0deg, rgba(30,80,255,0.7) 0%, rgba(30,80,255,0) 68%) 72% 0/3.5% 100% no-repeat,
-        linear-gradient(0deg, rgba(40,100,255,0.8) 0%, rgba(40,100,255,0) 74%) 78% 0/5% 100% no-repeat,
-        linear-gradient(0deg, rgba(25,65,235,0.6) 0%, rgba(25,65,235,0) 62%) 84% 0/3% 100% no-repeat,
-        linear-gradient(0deg, rgba(35,85,250,0.7) 0%, rgba(35,85,250,0) 70%) 90% 0/4% 100% no-repeat,
-        linear-gradient(0deg, rgba(20,60,220,0.5) 0%, rgba(20,60,220,0) 55%) 96% 0/3% 100% no-repeat;
-      filter: blur(4px);
-    }
-    /* Layer 2: Thin accent bars */
-    .tracklist-bg::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0;
-      width: 100%; height: 100%;
-      background:
-        linear-gradient(0deg, rgba(70,140,255,0.6) 0%, rgba(70,140,255,0) 55%) 8% 0/1.5% 100% no-repeat,
-        linear-gradient(0deg, rgba(80,150,255,0.7) 0%, rgba(80,150,255,0) 60%) 19% 0/1.8% 100% no-repeat,
-        linear-gradient(0deg, rgba(60,125,255,0.5) 0%, rgba(60,125,255,0) 50%) 25% 0/1.2% 100% no-repeat,
-        linear-gradient(0deg, rgba(90,160,255,0.65) 0%, rgba(90,160,255,0) 58%) 32% 0/1.5% 100% no-repeat,
-        linear-gradient(0deg, rgba(70,140,255,0.7) 0%, rgba(70,140,255,0) 62%) 42% 0/2% 100% no-repeat,
-        linear-gradient(0deg, rgba(100,170,255,0.75) 0%, rgba(100,170,255,0) 65%) 48% 0/1.8% 100% no-repeat,
-        linear-gradient(0deg, rgba(80,150,255,0.6) 0%, rgba(80,150,255,0) 52%) 53% 0/1.3% 100% no-repeat,
-        linear-gradient(0deg, rgba(75,145,255,0.7) 0%, rgba(75,145,255,0) 60%) 59% 0/1.6% 100% no-repeat,
-        linear-gradient(0deg, rgba(65,135,255,0.55) 0%, rgba(65,135,255,0) 48%) 68% 0/1.2% 100% no-repeat,
-        linear-gradient(0deg, rgba(85,155,255,0.65) 0%, rgba(85,155,255,0) 56%) 75% 0/1.5% 100% no-repeat,
-        linear-gradient(0deg, rgba(70,140,255,0.6) 0%, rgba(70,140,255,0) 54%) 82% 0/1.8% 100% no-repeat,
-        linear-gradient(0deg, rgba(60,130,255,0.5) 0%, rgba(60,130,255,0) 45%) 92% 0/1.3% 100% no-repeat;
-      filter: blur(2px);
-    }
-    /* Central blue glow flood */
-    .tracklist-bg-glow {
-      position: absolute;
-      bottom: 0; left: 50%;
-      transform: translateX(-50%);
-      width: 100%; height: 70%;
-      background: radial-gradient(ellipse at 50% 100%, rgba(30,80,255,0.45) 0%, rgba(20,60,230,0.2) 30%, rgba(15,40,180,0.08) 55%, transparent 75%);
-      z-index: 0;
-      pointer-events: none;
+      filter: blur(3px);
     }
     #tracklist {
       position: relative;
@@ -1019,8 +964,7 @@
 
   <!-- TRACKLIST -->
   <div class="tracklist-wrapper">
-    <div class="tracklist-bg"></div>
-    <div class="tracklist-bg-glow"></div>
+    <canvas class="tracklist-bars-canvas" id="tracklistBars"></canvas>
   <section id="tracklist">
     <div class="section-header reveal">
       <span class="section-label">Tracklist</span>
@@ -1594,6 +1538,62 @@
         }
       });
     });
+  </script>
+
+  <!-- Tracklist blue bars background -->
+  <script>
+  (function() {
+    function drawTracklistBars() {
+      const canvas = document.getElementById('tracklistBars');
+      const wrapper = document.querySelector('.tracklist-wrapper');
+      if (!canvas || !wrapper) return;
+      const ctx = canvas.getContext('2d');
+      canvas.width = wrapper.offsetWidth * (window.devicePixelRatio || 1);
+      canvas.height = wrapper.offsetHeight * (window.devicePixelRatio || 1);
+      canvas.style.width = wrapper.offsetWidth + 'px';
+      canvas.style.height = wrapper.offsetHeight + 'px';
+      ctx.scale(window.devicePixelRatio || 1, window.devicePixelRatio || 1);
+      const w = wrapper.offsetWidth;
+      const h = wrapper.offsetHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      const bars = [
+        {x:0.03,w:0.025,a:0.6,h:0.65},{x:0.07,w:0.015,a:0.45,h:0.55},
+        {x:0.10,w:0.035,a:0.75,h:0.72},{x:0.15,w:0.02,a:0.5,h:0.58},
+        {x:0.19,w:0.03,a:0.65,h:0.68},{x:0.24,w:0.04,a:0.85,h:0.78},
+        {x:0.29,w:0.02,a:0.5,h:0.52},{x:0.33,w:0.035,a:0.7,h:0.7},
+        {x:0.38,w:0.045,a:0.9,h:0.82},{x:0.42,w:0.02,a:0.55,h:0.58},
+        {x:0.46,w:0.05,a:0.95,h:0.88},{x:0.50,w:0.03,a:0.75,h:0.75},
+        {x:0.54,w:0.04,a:0.85,h:0.8},{x:0.58,w:0.02,a:0.5,h:0.55},
+        {x:0.62,w:0.035,a:0.7,h:0.72},{x:0.67,w:0.045,a:0.9,h:0.85},
+        {x:0.71,w:0.025,a:0.6,h:0.6},{x:0.75,w:0.04,a:0.8,h:0.76},
+        {x:0.80,w:0.03,a:0.65,h:0.65},{x:0.85,w:0.035,a:0.75,h:0.7},
+        {x:0.90,w:0.02,a:0.5,h:0.55},{x:0.94,w:0.03,a:0.6,h:0.6},
+        {x:0.97,w:0.025,a:0.45,h:0.5}
+      ];
+
+      bars.forEach(function(b) {
+        var bx = b.x * w, bw = b.w * w, bh = b.h * h;
+        var grad = ctx.createLinearGradient(bx, h, bx, h - bh);
+        grad.addColorStop(0, 'rgba(40,100,255,' + b.a + ')');
+        grad.addColorStop(0.3, 'rgba(30,80,255,' + (b.a * 0.7) + ')');
+        grad.addColorStop(0.7, 'rgba(20,60,220,' + (b.a * 0.3) + ')');
+        grad.addColorStop(1, 'rgba(20,60,220,0)');
+        ctx.fillStyle = grad;
+        ctx.fillRect(bx, h - bh, bw, bh);
+      });
+
+      var glowGrad = ctx.createRadialGradient(w/2, h, 0, w/2, h, w*0.5);
+      glowGrad.addColorStop(0, 'rgba(40,90,255,0.5)');
+      glowGrad.addColorStop(0.4, 'rgba(30,70,240,0.2)');
+      glowGrad.addColorStop(1, 'rgba(20,50,200,0)');
+      ctx.fillStyle = glowGrad;
+      ctx.fillRect(0, h * 0.3, w, h * 0.7);
+    }
+
+    window.addEventListener('load', drawTracklistBars);
+    window.addEventListener('resize', drawTracklistBars);
+  })();
   </script>
 </body>
 </html>
