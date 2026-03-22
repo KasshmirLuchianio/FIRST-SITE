@@ -1547,6 +1547,54 @@
         }
       });
     });
+
+    // Deep links — open native apps on mobile
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+      const deepLinks = {
+        'open.spotify.com/artist/': 'spotify://artist/',
+        'instagram.com/': 'instagram://user?username=',
+        'tiktok.com/@': 'tiktok://user?username=',
+        'youtube.com/@': 'youtube://',
+        'youtube.com/watch': 'youtube://'
+      };
+
+      document.querySelectorAll('.social-btn, .footer-links a').forEach(link => {
+        link.addEventListener('click', function(e) {
+          const href = this.getAttribute('href');
+          if (!href) return;
+
+          for (const [webPattern, appScheme] of Object.entries(deepLinks)) {
+            if (href.includes(webPattern)) {
+              e.preventDefault();
+              let deepLink;
+
+              if (webPattern === 'open.spotify.com/artist/') {
+                const id = href.split('/artist/')[1].split('?')[0];
+                deepLink = appScheme + id;
+              } else if (webPattern === 'instagram.com/') {
+                const username = href.split('instagram.com/')[1].replace(/\//g, '');
+                deepLink = appScheme + username;
+              } else if (webPattern === 'tiktok.com/@') {
+                const username = href.split('@')[1].replace(/\//g, '');
+                deepLink = appScheme + username;
+              } else if (webPattern.includes('youtube.com')) {
+                deepLink = href.replace('https://www.', 'vnd.youtube://');
+              }
+
+              // Try deep link, fallback to web after timeout
+              const fallbackTimer = setTimeout(() => {
+                window.location.href = href;
+              }, 1500);
+
+              window.addEventListener('blur', () => clearTimeout(fallbackTimer), { once: true });
+              window.location.href = deepLink;
+              break;
+            }
+          }
+        });
+      });
+    }
   </script>
 
 </body>
