@@ -519,6 +519,32 @@
       transform: translateY(-3px) scale(1.02);
     }
 
+    /* === PROMO VIDEO STATS OVERLAY === */
+    .promo-stats {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 40px 60px;
+      pointer-events: none;
+    }
+    .promo-stat-line {
+      font-family: 'Sprayerz', var(--font-heading);
+      font-size: clamp(1.8rem, 4vw, 3.5rem);
+      color: rgba(255, 255, 255, 0.35);
+      letter-spacing: 6px;
+      line-height: 1.4;
+      text-transform: uppercase;
+      opacity: 0;
+      transform: translateX(-80px) rotateY(40deg);
+      text-shadow: 0 0 20px rgba(0, 229, 255, 0.15);
+    }
+
     /* === PROMO VIDEO DIVIDER === */
     .promo-video-section {
       position: relative;
@@ -923,6 +949,8 @@
       .balloon-label-large { max-width: 250px; }
 
       .promo-video-section { width: 100vw; margin-left: calc(-50vw + 50%); }
+      .promo-stats { padding: 20px 24px; }
+      .promo-stat-line { font-size: clamp(1rem, 5vw, 1.6rem); letter-spacing: 3px; }
     }
 
     /* === MOBILE NAV DRAWER === */
@@ -1038,6 +1066,12 @@
   <!-- PROMO VIDEO DIVIDER -->
   <div class="promo-video-section">
     <div style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:2;"></div>
+    <div class="promo-stats">
+      <div class="promo-stat-line">1 ARTIST</div>
+      <div class="promo-stat-line">6 INGINERI DE SUNET</div>
+      <div class="promo-stat-line">1 ALBUM</div>
+      <div class="promo-stat-line">14 PIESE</div>
+    </div>
     <video class="promo-desktop" autoplay muted loop playsinline disablePictureInPicture controlsList="nodownload nofullscreen noremoteplayback">
       <source src="assets/kashmir-promo.mp4" type="video/mp4">
     </video>
@@ -1547,6 +1581,23 @@
           });
         },
         once: true
+      });
+    });
+
+    // Promo video stats — 3D entrance on scroll
+    gsap.utils.toArray('.promo-stat-line').forEach((line, i) => {
+      gsap.to(line, {
+        opacity: 1,
+        x: 0,
+        rotateY: 0,
+        duration: 0.8,
+        delay: i * 0.15,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '.promo-video-section',
+          start: 'top 70%',
+          toggleActions: 'play none none reverse'
+        }
       });
     });
 
