@@ -21,6 +21,13 @@
       font-display: swap;
     }
     @font-face {
+      font-family: 'SuperstarM54';
+      src: url('assets/SuperstarM54.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
       font-family: 'WantedM54';
       src: url('assets/WantedM54.ttf') format('truetype');
       font-weight: normal;
@@ -117,10 +124,10 @@
       text-decoration: none;
       display: flex;
       align-items: center;
-      font-family: 'Sprayerz', var(--font-heading);
+      font-family: 'SuperstarM54', var(--font-heading);
       font-size: 1.5rem;
       font-weight: 400;
-      color: #00e5ff;
+      color: var(--text-primary);
       letter-spacing: 4px;
       text-transform: uppercase;
     }
@@ -143,15 +150,15 @@
       display: flex;
       align-items: center;
       transition: all 0.3s ease;
-      font-family: 'Sprayerz', var(--font-heading);
+      font-family: 'SuperstarM54', var(--font-heading);
       font-size: 1.5rem;
       font-weight: 400;
-      color: #00e5ff;
+      color: var(--text-primary);
       letter-spacing: 4px;
       text-transform: uppercase;
     }
     .nav-cta-btn:hover {
-      filter: drop-shadow(0 0 12px rgba(0, 229, 255, 0.5));
+      filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.3));
     }
     #navbar.scrolled .nav-inner {
       max-width: 800px;
