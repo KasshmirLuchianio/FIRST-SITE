@@ -529,6 +529,19 @@
       transform: translateY(-3px) scale(1.02);
     }
 
+    /* === PROMO VIDEO DIVIDER === */
+    .promo-video-section {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      background: #000;
+      z-index: 1;
+    }
+    .promo-video-section video {
+      width: 100%;
+      display: block;
+    }
+
     /* === TRACKLIST === */
     #tracklist {
       position: relative;
@@ -948,6 +961,13 @@
       </div>
     </div>
   </section>
+
+  <!-- PROMO VIDEO DIVIDER -->
+  <div class="promo-video-section">
+    <video autoplay muted loop playsinline>
+      <source src="assets/kashmir-promo.mp4" type="video/mp4">
+    </video>
+  </div>
 
   <!-- TRACKLIST -->
   <section id="tracklist">
