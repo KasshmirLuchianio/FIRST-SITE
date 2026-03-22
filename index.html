@@ -528,7 +528,97 @@
     }
 
     /* === TRACKLIST === */
+    .tracklist-wrapper {
+      position: relative;
+      overflow: hidden;
+      background: #000;
+    }
+    /* Blue vertical light bars background */
+    .tracklist-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .tracklist-bg::before {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        90deg,
+        transparent 0px,
+        transparent 18px,
+        rgba(30, 80, 255, 0.12) 18px,
+        rgba(30, 80, 255, 0.25) 22px,
+        rgba(40, 100, 255, 0.18) 26px,
+        transparent 26px,
+        transparent 38px,
+        rgba(20, 60, 220, 0.10) 38px,
+        rgba(25, 70, 240, 0.22) 41px,
+        rgba(30, 80, 255, 0.15) 44px,
+        transparent 44px,
+        transparent 60px,
+        rgba(50, 110, 255, 0.20) 60px,
+        rgba(60, 130, 255, 0.30) 63px,
+        rgba(50, 110, 255, 0.18) 66px,
+        transparent 66px,
+        transparent 80px
+      );
+      filter: blur(2px);
+      mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 40%, rgba(0,0,0,0) 85%);
+      -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 40%, rgba(0,0,0,0) 85%);
+    }
+    .tracklist-bg::after {
+      content: '';
+      position: absolute;
+      bottom: -20%;
+      left: 45%;
+      transform: translateX(-50%);
+      width: 130%;
+      height: 90%;
+      background: repeating-linear-gradient(
+        90deg,
+        transparent 0px,
+        transparent 25px,
+        rgba(40, 90, 255, 0.08) 25px,
+        rgba(50, 100, 255, 0.18) 28px,
+        rgba(40, 90, 255, 0.10) 31px,
+        transparent 31px,
+        transparent 50px,
+        rgba(60, 120, 255, 0.15) 50px,
+        rgba(80, 150, 255, 0.25) 53px,
+        rgba(60, 120, 255, 0.12) 56px,
+        transparent 56px,
+        transparent 72px,
+        rgba(30, 70, 240, 0.10) 72px,
+        rgba(35, 80, 250, 0.20) 74px,
+        transparent 76px,
+        transparent 95px
+      );
+      filter: blur(3px);
+      mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0) 80%);
+      -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0) 80%);
+    }
+    /* Central blue glow */
+    .tracklist-bg-glow {
+      position: absolute;
+      bottom: -15%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 70%;
+      height: 80%;
+      background: radial-gradient(ellipse at center bottom, rgba(30, 80, 255, 0.25) 0%, rgba(20, 50, 200, 0.10) 40%, transparent 70%);
+      z-index: 0;
+      pointer-events: none;
+    }
     #tracklist {
+      position: relative;
+      z-index: 1;
       padding: 120px 32px 60px;
       max-width: 1100px;
       margin: 0 auto;
@@ -946,6 +1036,9 @@
   </section>
 
   <!-- TRACKLIST -->
+  <div class="tracklist-wrapper">
+    <div class="tracklist-bg"></div>
+    <div class="tracklist-bg-glow"></div>
   <section id="tracklist">
     <div class="section-header reveal">
       <span class="section-label">Tracklist</span>
@@ -981,6 +1074,7 @@
       <div class="track-item"><div class="track-number">14</div><div class="track-info"><div class="track-name">Chef</div></div></div>
     </div>
   </section>
+  </div><!-- /tracklist-wrapper -->
 
   <!-- MUZICA -->
   <section id="muzica">
