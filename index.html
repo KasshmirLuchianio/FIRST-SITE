@@ -542,6 +542,29 @@
       display: block;
     }
 
+    /* === BALLOON FONT IMAGES === */
+    .balloon-label {
+      display: block;
+      max-width: 280px;
+      height: auto;
+      margin: 0 auto 8px;
+      filter: drop-shadow(0 0 12px rgba(0,200,255,0.15));
+    }
+    .balloon-title {
+      display: block;
+      max-width: 420px;
+      height: auto;
+      margin: 0 auto 0;
+      filter: drop-shadow(0 0 16px rgba(0,200,255,0.2));
+    }
+    .balloon-label-large {
+      display: block;
+      max-width: 350px;
+      height: auto;
+      margin: 0 auto 8px;
+      filter: drop-shadow(0 0 12px rgba(0,200,255,0.15));
+    }
+
     /* === TRACKLIST === */
     #tracklist {
       position: relative;
@@ -972,8 +995,8 @@
   <!-- TRACKLIST -->
   <section id="tracklist">
     <div class="section-header reveal">
-      <span class="section-label">Tracklist</span>
-      <h2 class="section-title">GIGI GAZON</h2>
+      <img src="assets/balloon-tracklist.png" alt="Tracklist" class="balloon-label">
+      <img src="assets/balloon-gigi-gazon.png" alt="GIGI GAZON" class="balloon-title">
     </div>
     <div class="track-list">
       <div class="track-item"><div class="track-number">01</div><div class="track-info"><div class="track-name">La Familia</div></div></div>
@@ -1009,8 +1032,8 @@
   <!-- MUZICA -->
   <section id="muzica">
     <div class="section-header reveal">
-      <span class="section-label">Muzica</span>
-      <h2 class="section-title">VIDEOCLIPURI</h2>
+      <img src="assets/balloon-muzica.png" alt="Muzica" class="balloon-label">
+      <img src="assets/balloon-videoclipuri.png" alt="Videoclipuri" class="balloon-title">
       <p class="section-desc">Asculta piesele deja lansate pe YouTube de pe urmatorul album.</p>
     </div>
     <div class="video-grid">
@@ -1046,8 +1069,7 @@
     <!-- RENASCUT ALBUM -->
     <div class="renascut-block reveal">
       <div class="video-album-label">
-        <span class="album-tag">RENASCUT</span>
-        <span class="album-tag-sub"></span>
+        <img src="assets/balloon-renascut.png" alt="RENASCUT" class="balloon-label-large">
       </div>
       <div class="renascut-hero">
         <div class="renascut-cover">
