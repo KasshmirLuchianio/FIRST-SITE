@@ -11,7 +11,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.17/dist/hls.min.js"></script>
   <style>
     :root {
       --bg-primary: #050a14;
@@ -43,10 +42,28 @@
 
     body {
       font-family: var(--font-body);
-      background: var(--bg-primary);
+      background: #000;
       color: var(--text-primary);
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
+    }
+
+    /* === GLOBAL SMOKE VIDEO BACKGROUND === */
+    .global-video-bg {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -2;
+      pointer-events: none;
+    }
+    .global-video-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 10, 20, 0.55);
+      z-index: -1;
+      pointer-events: none;
     }
 
     /* === LOADER === */
@@ -185,22 +202,6 @@
       align-items: center;
       overflow: hidden;
       padding: 120px 64px 120px;
-    }
-    .hero-video-bg {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: 0;
-      pointer-events: none;
-    }
-    .hero-video-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(5, 10, 20, 0.55);
-      z-index: 0;
-      pointer-events: none;
     }
     .hero-bg-decor {
       position: absolute;
@@ -352,13 +353,13 @@
       position: relative;
       padding: 120px 32px;
       overflow: hidden;
-      background: url('assets/cover-back.png') center center / cover no-repeat;
+      background: transparent;
     }
     #album::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse at center, rgba(5,10,20,0.88) 20%, rgba(5,10,20,0.7) 60%, rgba(5,10,20,0.45) 100%);
+      background: rgba(5, 10, 20, 0.3);
       z-index: 0;
     }
     .album-orb {
@@ -529,32 +530,8 @@
     }
 
     /* === TRACKLIST === */
-    .tracklist-wrapper {
-      position: relative;
-      overflow: hidden;
-      background: #000;
-    }
-    /* Animated blue bars video background */
-    .tracklist-video-bg {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: 0;
-      pointer-events: none;
-      opacity: 0.6;
-    }
-    .tracklist-video-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,0.4);
-      z-index: 0;
-      pointer-events: none;
-    }
     #tracklist {
       position: relative;
-      z-index: 1;
       padding: 120px 32px 60px;
       max-width: 1100px;
       margin: 0 auto;
@@ -882,6 +859,12 @@
 </head>
 <body>
 
+  <!-- GLOBAL SMOKE VIDEO BACKGROUND -->
+  <video class="global-video-bg" autoplay muted loop playsinline>
+    <source src="assets/hero-bg.mp4" type="video/mp4">
+  </video>
+  <div class="global-video-overlay"></div>
+
   <!-- LOADER -->
   <div id="loader">
     <canvas id="loaderCanvas" width="200" height="200"></canvas>
@@ -914,11 +897,6 @@
 
   <!-- HERO -->
   <section id="hero">
-    <!-- Video Background -->
-    <video class="hero-video-bg" autoplay muted loop playsinline>
-      <source src="assets/hero-bg.mp4" type="video/mp4">
-    </video>
-    <div class="hero-video-overlay"></div>
     <div class="hero-bg-decor">
       <div class="orb orb-1"></div>
       <div class="orb orb-2"></div>
@@ -972,9 +950,6 @@
   </section>
 
   <!-- TRACKLIST -->
-  <div class="tracklist-wrapper">
-    <video class="tracklist-video-bg" id="tracklistVideo" muted loop playsinline></video>
-    <div class="tracklist-video-overlay"></div>
   <section id="tracklist">
     <div class="section-header reveal">
       <span class="section-label">Tracklist</span>
@@ -1010,7 +985,6 @@
       <div class="track-item"><div class="track-number">14</div><div class="track-info"><div class="track-name">Chef</div></div></div>
     </div>
   </section>
-  </div><!-- /tracklist-wrapper -->
 
   <!-- MUZICA -->
   <section id="muzica">
@@ -1550,27 +1524,5 @@
     });
   </script>
 
-  <!-- Tracklist animated blue bars (HLS video stream) -->
-  <script>
-  (function() {
-    var video = document.getElementById('tracklistVideo');
-    if (!video) return;
-    var src = 'https://stream.mux.com/T6oQJQ02cQ6N01TR6iHwZkKFkbepS34dkkIc9iukgy400g.m3u8';
-
-    if (Hls.isSupported()) {
-      var hls = new Hls();
-      hls.loadSource(src);
-      hls.attachMedia(video);
-      hls.on(Hls.Events.MANIFEST_PARSED, function() {
-        video.play().catch(function(e) { console.log('Autoplay prevented:', e); });
-      });
-    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-      video.src = src;
-      video.addEventListener('loadedmetadata', function() {
-        video.play().catch(function(e) { console.log('Autoplay prevented:', e); });
-      });
-    }
-  })();
-  </script>
 </body>
 </html>
