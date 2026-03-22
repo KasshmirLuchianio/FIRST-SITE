@@ -185,11 +185,28 @@
       overflow: hidden;
       padding: 120px 64px 120px;
     }
+    .hero-video-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .hero-video-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(5, 10, 20, 0.55);
+      z-index: 0;
+      pointer-events: none;
+    }
     .hero-bg-decor {
       position: absolute;
       inset: 0;
       pointer-events: none;
       overflow: hidden;
+      z-index: 1;
     }
     .orb {
       position: absolute;
@@ -216,6 +233,7 @@
 
     .hero-3d-wrapper {
       position: relative;
+      z-index: 2;
       width: 100%;
       height: 100%;
       min-height: 500px;
@@ -228,7 +246,7 @@
 
     .hero-content {
       position: relative;
-      z-index: 1;
+      z-index: 2;
       text-align: center;
       max-width: 600px;
       display: flex;
@@ -870,6 +888,11 @@
 
   <!-- HERO -->
   <section id="hero">
+    <!-- Video Background -->
+    <video class="hero-video-bg" autoplay muted loop playsinline>
+      <source src="assets/hero-bg.mp4" type="video/mp4">
+    </video>
+    <div class="hero-video-overlay"></div>
     <div class="hero-bg-decor">
       <div class="orb orb-1"></div>
       <div class="orb orb-2"></div>
