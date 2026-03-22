@@ -353,13 +353,13 @@
       position: relative;
       padding: 120px 32px;
       overflow: hidden;
-      background: transparent;
+      background: url('assets/cover-back.png') center center / cover no-repeat;
     }
     #album::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: rgba(5, 10, 20, 0.3);
+      background: radial-gradient(ellipse at center, rgba(5,10,20,0.88) 20%, rgba(5,10,20,0.7) 60%, rgba(5,10,20,0.45) 100%);
       z-index: 0;
     }
     .album-orb {
