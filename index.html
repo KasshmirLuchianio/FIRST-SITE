@@ -547,6 +547,11 @@
       width: 100%;
       display: block;
     }
+    .promo-mobile { display: none; }
+    @media (max-width: 768px) {
+      .promo-desktop { display: none; }
+      .promo-mobile { display: block; }
+    }
 
     /* === BALLOON FONT IMAGES === */
     .balloon-label {
@@ -1000,8 +1005,11 @@
 
   <!-- PROMO VIDEO DIVIDER -->
   <div class="promo-video-section">
-    <video autoplay muted loop playsinline>
+    <video class="promo-desktop" autoplay muted loop playsinline>
       <source src="assets/kashmir-promo.mp4" type="video/mp4">
+    </video>
+    <video class="promo-mobile" autoplay muted loop playsinline>
+      <source src="assets/kashmir-promo-mobile.mp4" type="video/mp4">
     </video>
   </div>
 
