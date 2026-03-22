@@ -11,6 +11,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.17/dist/hls.min.js"></script>
   <style>
     :root {
       --bg-primary: #050a14;
@@ -533,15 +534,23 @@
       overflow: hidden;
       background: #000;
     }
-    /* Blue vertical light bars — canvas rendered */
-    .tracklist-bars-canvas {
+    /* Animated blue bars video background */
+    .tracklist-video-bg {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
+      object-fit: cover;
       z-index: 0;
       pointer-events: none;
-      filter: blur(3px);
+      opacity: 0.6;
+    }
+    .tracklist-video-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 0;
+      pointer-events: none;
     }
     #tracklist {
       position: relative;
@@ -964,7 +973,8 @@
 
   <!-- TRACKLIST -->
   <div class="tracklist-wrapper">
-    <canvas class="tracklist-bars-canvas" id="tracklistBars"></canvas>
+    <video class="tracklist-video-bg" id="tracklistVideo" muted loop playsinline></video>
+    <div class="tracklist-video-overlay"></div>
   <section id="tracklist">
     <div class="section-header reveal">
       <span class="section-label">Tracklist</span>
@@ -1540,59 +1550,26 @@
     });
   </script>
 
-  <!-- Tracklist blue bars background -->
+  <!-- Tracklist animated blue bars (HLS video stream) -->
   <script>
   (function() {
-    function drawTracklistBars() {
-      const canvas = document.getElementById('tracklistBars');
-      const wrapper = document.querySelector('.tracklist-wrapper');
-      if (!canvas || !wrapper) return;
-      const ctx = canvas.getContext('2d');
-      canvas.width = wrapper.offsetWidth * (window.devicePixelRatio || 1);
-      canvas.height = wrapper.offsetHeight * (window.devicePixelRatio || 1);
-      canvas.style.width = wrapper.offsetWidth + 'px';
-      canvas.style.height = wrapper.offsetHeight + 'px';
-      ctx.scale(window.devicePixelRatio || 1, window.devicePixelRatio || 1);
-      const w = wrapper.offsetWidth;
-      const h = wrapper.offsetHeight;
-      ctx.clearRect(0, 0, w, h);
+    var video = document.getElementById('tracklistVideo');
+    if (!video) return;
+    var src = 'https://stream.mux.com/T6oQJQ02cQ6N01TR6iHwZkKFkbepS34dkkIc9iukgy400g.m3u8';
 
-      const bars = [
-        {x:0.03,w:0.025,a:0.6,h:0.65},{x:0.07,w:0.015,a:0.45,h:0.55},
-        {x:0.10,w:0.035,a:0.75,h:0.72},{x:0.15,w:0.02,a:0.5,h:0.58},
-        {x:0.19,w:0.03,a:0.65,h:0.68},{x:0.24,w:0.04,a:0.85,h:0.78},
-        {x:0.29,w:0.02,a:0.5,h:0.52},{x:0.33,w:0.035,a:0.7,h:0.7},
-        {x:0.38,w:0.045,a:0.9,h:0.82},{x:0.42,w:0.02,a:0.55,h:0.58},
-        {x:0.46,w:0.05,a:0.95,h:0.88},{x:0.50,w:0.03,a:0.75,h:0.75},
-        {x:0.54,w:0.04,a:0.85,h:0.8},{x:0.58,w:0.02,a:0.5,h:0.55},
-        {x:0.62,w:0.035,a:0.7,h:0.72},{x:0.67,w:0.045,a:0.9,h:0.85},
-        {x:0.71,w:0.025,a:0.6,h:0.6},{x:0.75,w:0.04,a:0.8,h:0.76},
-        {x:0.80,w:0.03,a:0.65,h:0.65},{x:0.85,w:0.035,a:0.75,h:0.7},
-        {x:0.90,w:0.02,a:0.5,h:0.55},{x:0.94,w:0.03,a:0.6,h:0.6},
-        {x:0.97,w:0.025,a:0.45,h:0.5}
-      ];
-
-      bars.forEach(function(b) {
-        var bx = b.x * w, bw = b.w * w, bh = b.h * h;
-        var grad = ctx.createLinearGradient(bx, h, bx, h - bh);
-        grad.addColorStop(0, 'rgba(40,100,255,' + b.a + ')');
-        grad.addColorStop(0.3, 'rgba(30,80,255,' + (b.a * 0.7) + ')');
-        grad.addColorStop(0.7, 'rgba(20,60,220,' + (b.a * 0.3) + ')');
-        grad.addColorStop(1, 'rgba(20,60,220,0)');
-        ctx.fillStyle = grad;
-        ctx.fillRect(bx, h - bh, bw, bh);
+    if (Hls.isSupported()) {
+      var hls = new Hls();
+      hls.loadSource(src);
+      hls.attachMedia(video);
+      hls.on(Hls.Events.MANIFEST_PARSED, function() {
+        video.play().catch(function(e) { console.log('Autoplay prevented:', e); });
       });
-
-      var glowGrad = ctx.createRadialGradient(w/2, h, 0, w/2, h, w*0.5);
-      glowGrad.addColorStop(0, 'rgba(40,90,255,0.5)');
-      glowGrad.addColorStop(0.4, 'rgba(30,70,240,0.2)');
-      glowGrad.addColorStop(1, 'rgba(20,50,200,0)');
-      ctx.fillStyle = glowGrad;
-      ctx.fillRect(0, h * 0.3, w, h * 0.7);
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      video.src = src;
+      video.addEventListener('loadedmetadata', function() {
+        video.play().catch(function(e) { console.log('Autoplay prevented:', e); });
+      });
     }
-
-    window.addEventListener('load', drawTracklistBars);
-    window.addEventListener('resize', drawTracklistBars);
   })();
   </script>
 </body>
