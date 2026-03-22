@@ -411,11 +411,11 @@
     }
     .album-price-card {
       background: var(--glass-bg);
-      border: 1px solid rgba(var(--accent-rgb), 0.2);
+      border: 1px solid rgba(192, 200, 216, 0.2);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border-radius: 24px;
-      padding: 64px 48px;
+      padding: 100px 48px;
       margin-bottom: 32px;
       position: relative;
       overflow: hidden;
@@ -425,7 +425,7 @@
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 2px;
-      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      background: linear-gradient(90deg, transparent, #c0c8d8, transparent);
     }
     .album-coming-soon {
       font-family: 'WantedM54', var(--font-heading);
@@ -544,13 +544,13 @@
       align-items: flex-end;
     }
     .promo-stat-line {
-      font-family: 'SuperstarM54', var(--font-heading);
+      font-family: var(--font-heading);
       font-size: clamp(1.8rem, 4vw, 3.2rem);
       color: rgba(255, 255, 255, 0.8);
       letter-spacing: 5px;
       line-height: 1.5;
       text-transform: uppercase;
-      font-weight: 400;
+      font-weight: 700;
       opacity: 0;
       transform: translateX(-80px) rotateY(40deg);
     }
