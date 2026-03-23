@@ -862,6 +862,10 @@
       border-radius: 20px;
       overflow: hidden;
       transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      will-change: transform, opacity;
+      transform: translateZ(0);
     }
     .video-card:hover {
       transform: translateY(-6px);
@@ -878,6 +882,9 @@
       top: 0; left: 0;
       width: 100%; height: 100%;
       border: none;
+      transform: translateZ(0);
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
     }
     .video-card .video-info {
       padding: 20px 24px;
@@ -1417,7 +1424,7 @@
       alpha: true,
       powerPreference: 'high-performance'
     });
-    const pixelRatio = Math.min(window.devicePixelRatio, 2);
+    const pixelRatio = isMobileHero ? Math.min(window.devicePixelRatio, 1.5) : Math.min(window.devicePixelRatio, 2);
     renderer.setPixelRatio(pixelRatio);
     renderer.setSize(wrapper.clientWidth, wrapper.clientHeight);
     renderer.outputEncoding = THREE.sRGBEncoding;
@@ -1450,13 +1457,18 @@
     const envMap = pmremGenerator.fromScene(envScene).texture;
     scene.environment = envMap;
 
-    // Render initial frame immediately (before textures load)
-    renderer.render(scene, camera);
-
-    // Load textures with callbacks to re-render as soon as each loads
+    // Load textures with callbacks to update materials when ready
     const textureLoader = new THREE.TextureLoader();
-    const frontTexture = textureLoader.load('assets/cover-front.png', () => { renderer.render(scene, camera); });
-    const backTexture = textureLoader.load('assets/cover-back.png', () => { renderer.render(scene, camera); });
+    const frontTexture = textureLoader.load('assets/cover-front.png', (tex) => {
+      tex.encoding = THREE.sRGBEncoding;
+      frontMat.map = tex;
+      frontMat.needsUpdate = true;
+    });
+    const backTexture = textureLoader.load('assets/cover-back.png', (tex) => {
+      tex.encoding = THREE.sRGBEncoding;
+      backMat.map = tex;
+      backMat.needsUpdate = true;
+    });
     frontTexture.encoding = THREE.sRGBEncoding;
     backTexture.encoding = THREE.sRGBEncoding;
 
@@ -1468,10 +1480,10 @@
     const caseH = 2.4;
     const caseD = 0.15;
 
-    // Front cover panel
+    // Front cover panel — placeholder color visible instantly
     const frontGeo = new THREE.PlaneGeometry(caseW, caseH);
     const frontMat = new THREE.MeshStandardMaterial({
-      map: frontTexture,
+      color: 0x1a2a44,
       roughness: 0.3,
       metalness: 0.05,
       envMapIntensity: 0.5
@@ -1480,10 +1492,10 @@
     frontPanel.position.z = caseD / 2 + 0.001;
     digipakGroup.add(frontPanel);
 
-    // Back cover panel
+    // Back cover panel — placeholder color visible instantly
     const backGeo = new THREE.PlaneGeometry(caseW, caseH);
     const backMat = new THREE.MeshStandardMaterial({
-      map: backTexture,
+      color: 0x1a2a44,
       roughness: 0.3,
       metalness: 0.05,
       envMapIntensity: 0.5
@@ -1551,6 +1563,9 @@
     digipakGroup.rotation.x = 0.15;
     digipakGroup.rotation.y = -0.3;
     scene.add(digipakGroup);
+
+    // Render first frame immediately — digipak visible with placeholder color
+    renderer.render(scene, camera);
 
     // === DRAG TO ROTATE (no zoom, no scroll capture) ===
     let isDragging = false;
