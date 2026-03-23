@@ -885,6 +885,11 @@
       transform: translateZ(0);
       -webkit-backface-visibility: hidden;
       backface-visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .video-card.revealed iframe {
+      opacity: 1;
     }
     .video-card .video-info {
       padding: 20px 24px;
@@ -1693,6 +1698,7 @@
     });
 
     // Video cards — each grid animates independently
+    // Hide iframes during animation, reveal after completion
     document.querySelectorAll('.video-grid').forEach(grid => {
       const cards = grid.querySelectorAll('.video-card');
       gsap.set(cards, { y: 30, opacity: 0 });
@@ -1705,7 +1711,10 @@
             opacity: 1,
             duration: 0.5,
             stagger: 0.12,
-            ease: 'power2.out'
+            ease: 'power2.out',
+            onComplete: () => {
+              cards.forEach(card => card.classList.add('revealed'));
+            }
           });
         },
         once: true
