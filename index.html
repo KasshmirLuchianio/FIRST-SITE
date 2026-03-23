@@ -96,6 +96,10 @@
   }
   </script>
 
+  <!-- Preload 3D textures — download starts immediately -->
+  <link rel="preload" href="assets/cover-front.png" as="image">
+  <link rel="preload" href="assets/cover-back.png" as="image">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -327,6 +331,11 @@
       position: absolute;
       inset: 0;
       z-index: 0;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+    #hero3d.loaded {
+      opacity: 1;
     }
 
     .hero-content {
@@ -1464,17 +1473,26 @@
     const envMap = pmremGenerator.fromScene(envScene).texture;
     scene.environment = envMap;
 
-    // Load textures with callbacks to update materials when ready
+    // Load textures — preloaded in <head>, should be instant from cache
+    let texturesLoaded = 0;
+    function onTextureReady() {
+      texturesLoaded++;
+      if (texturesLoaded >= 2) {
+        canvas.classList.add('loaded');
+      }
+    }
     const textureLoader = new THREE.TextureLoader();
     const frontTexture = textureLoader.load('assets/cover-front.png', (tex) => {
       tex.encoding = THREE.sRGBEncoding;
       frontMat.map = tex;
       frontMat.needsUpdate = true;
+      onTextureReady();
     });
     const backTexture = textureLoader.load('assets/cover-back.png', (tex) => {
       tex.encoding = THREE.sRGBEncoding;
       backMat.map = tex;
       backMat.needsUpdate = true;
+      onTextureReady();
     });
     frontTexture.encoding = THREE.sRGBEncoding;
     backTexture.encoding = THREE.sRGBEncoding;
