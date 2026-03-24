@@ -96,9 +96,21 @@
   }
   </script>
 
-  <!-- Preload 3D textures — download starts immediately -->
+  <!-- Preload 3D textures — start download + decode in <head> before anything else -->
   <link rel="preload" href="assets/cover-front.png" as="image">
   <link rel="preload" href="assets/cover-back.png" as="image">
+  <script>
+    // Load images as early as possible so they're ready when Three.js needs them
+    window.__coverFront = new Image();
+    window.__coverFront.crossOrigin = 'anonymous';
+    window.__coverFront.src = 'assets/cover-front.png';
+    window.__coverBack = new Image();
+    window.__coverBack.crossOrigin = 'anonymous';
+    window.__coverBack.src = 'assets/cover-back.png';
+    // Force scroll to top immediately (Safari fix)
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    window.scrollTo(0, 0);
+  </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1401,9 +1413,10 @@
   </footer>
 
   <script>
-    // Force scroll to top on page load/refresh
-    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    // Force scroll to top on page load/refresh (redundant with <head> for Safari)
     window.scrollTo(0, 0);
+    // Safari sometimes restores scroll after paint — force again on load
+    window.addEventListener('load', () => { window.scrollTo(0, 0); });
 
     // === NAVBAR SCROLL ===
     window.addEventListener('scroll', () => {
@@ -1421,25 +1434,6 @@
     }
 
     // === THREE.JS — 3D DIGIPAK ===
-    // === PRELOAD IMAGES FIRST, THEN BUILD SCENE ===
-    function preloadImage(src) {
-      return new Promise((resolve) => {
-        const img = new Image();
-        img.crossOrigin = 'anonymous';
-        img.onload = () => resolve(img);
-        img.onerror = () => resolve(null);
-        img.src = src;
-      });
-    }
-
-    Promise.all([
-      preloadImage('assets/cover-front.png'),
-      preloadImage('assets/cover-back.png')
-    ]).then(([frontImg, backImg]) => {
-      initScene(frontImg, backImg);
-    });
-
-    function initScene(frontImg, backImg) {
     const canvas = document.getElementById('hero3d');
     const wrapper = canvas.parentElement;
     const scene = new THREE.Scene();
@@ -1491,16 +1485,21 @@
     const envMap = pmremGenerator.fromScene(envScene).texture;
     scene.environment = envMap;
 
-    // Build textures from preloaded images
-    function makeTexture(img) {
-      if (!img) return null;
-      const tex = new THREE.Texture(img);
-      tex.encoding = THREE.sRGBEncoding;
-      tex.needsUpdate = true;
-      return tex;
+    // Build texture from preloaded <head> image, or load fresh if not ready
+    function applyTexture(img, material) {
+      function setTex(image) {
+        const tex = new THREE.Texture(image);
+        tex.encoding = THREE.sRGBEncoding;
+        tex.needsUpdate = true;
+        material.map = tex;
+        material.needsUpdate = true;
+      }
+      if (img && img.complete && img.naturalWidth > 0) {
+        setTex(img);
+      } else if (img) {
+        img.onload = function() { setTex(img); };
+      }
     }
-    const frontTexture = makeTexture(frontImg);
-    const backTexture = makeTexture(backImg);
 
     // Create digipak — a CD case with thickness
     const digipakGroup = new THREE.Group();
@@ -1510,11 +1509,10 @@
     const caseH = 2.4;
     const caseD = 0.15;
 
-    // Front cover panel — texture already loaded
+    // Front cover panel
     const frontGeo = new THREE.PlaneGeometry(caseW, caseH);
     const frontMat = new THREE.MeshStandardMaterial({
-      color: 0xffffff,
-      map: frontTexture,
+      color: 0x1a2a44,
       roughness: 0.3,
       metalness: 0.05,
       envMapIntensity: 0.5
@@ -1523,11 +1521,10 @@
     frontPanel.position.z = caseD / 2 + 0.001;
     digipakGroup.add(frontPanel);
 
-    // Back cover panel — texture already loaded
+    // Back cover panel
     const backGeo = new THREE.PlaneGeometry(caseW, caseH);
     const backMat = new THREE.MeshStandardMaterial({
-      color: 0xffffff,
-      map: backTexture,
+      color: 0x1a2a44,
       roughness: 0.3,
       metalness: 0.05,
       envMapIntensity: 0.5
@@ -1536,6 +1533,10 @@
     backPanel.position.z = -(caseD / 2 + 0.001);
     backPanel.rotation.y = Math.PI;
     digipakGroup.add(backPanel);
+
+    // Apply textures from <head> preloaded images (instant if cached, async if still loading)
+    applyTexture(window.__coverFront, frontMat);
+    applyTexture(window.__coverBack, backMat);
 
     // Spine / edges — the physical case body
     const edgeMat = new THREE.MeshPhysicalMaterial({
@@ -1687,8 +1688,6 @@
       renderer.render(scene, camera);
     }
     animate();
-
-    } // end initScene
 
     // === GSAP SCROLL ANIMATIONS ===
     gsap.registerPlugin(ScrollTrigger);
