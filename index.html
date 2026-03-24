@@ -331,11 +331,6 @@
       position: absolute;
       inset: 0;
       z-index: 0;
-      opacity: 0;
-      transition: opacity 0.5s ease;
-    }
-    #hero3d.loaded {
-      opacity: 1;
     }
 
     .hero-content {
@@ -1438,13 +1433,14 @@
     const isMobileHero = window.innerWidth < 768;
     camera.position.set(0, isMobileHero ? -0.1 : -0.1, isMobileHero ? 6.0 : 5.5);
 
+    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
     const renderer = new THREE.WebGLRenderer({
       canvas,
-      antialias: true,
+      antialias: !isMobileHero,
       alpha: true,
       powerPreference: 'high-performance'
     });
-    const pixelRatio = isMobileHero ? Math.min(window.devicePixelRatio, 1.5) : Math.min(window.devicePixelRatio, 2);
+    const pixelRatio = isMobileHero ? Math.min(window.devicePixelRatio, 1) : Math.min(window.devicePixelRatio, 2);
     renderer.setPixelRatio(pixelRatio);
     renderer.setSize(wrapper.clientWidth, wrapper.clientHeight);
     renderer.outputEncoding = THREE.sRGBEncoding;
@@ -1467,25 +1463,19 @@
     const ambient = new THREE.AmbientLight(0x222244, 0.6);
     scene.add(ambient);
 
-    // Environment
-    const pmremGenerator = new THREE.PMREMGenerator(renderer);
-    const envScene = new THREE.Scene();
-    envScene.background = new THREE.Color(0x050a14);
-    const envGeo = new THREE.SphereGeometry(50, 32, 32);
-    const envMat = new THREE.MeshBasicMaterial({ color: 0x0a1628, side: THREE.BackSide });
-    envScene.add(new THREE.Mesh(envGeo, envMat));
-    const envMap = pmremGenerator.fromScene(envScene).texture;
-    scene.environment = envMap;
-
-    // Load textures via native Image() first (Safari-friendly, uses browser cache)
-    let texturesLoaded = 0;
-    function onTextureReady() {
-      texturesLoaded++;
-      if (texturesLoaded >= 2) {
-        canvas.classList.add('loaded');
-      }
+    // Environment — skip heavy PMREM on mobile for faster init
+    if (!isMobileHero) {
+      const pmremGenerator = new THREE.PMREMGenerator(renderer);
+      const envScene = new THREE.Scene();
+      envScene.background = new THREE.Color(0x050a14);
+      const envGeo = new THREE.SphereGeometry(50, 32, 32);
+      const envMat = new THREE.MeshBasicMaterial({ color: 0x0a1628, side: THREE.BackSide });
+      envScene.add(new THREE.Mesh(envGeo, envMat));
+      const envMap = pmremGenerator.fromScene(envScene).texture;
+      scene.environment = envMap;
     }
 
+    // Load textures via native Image() — Safari-friendly, uses browser cache
     function loadTextureFromImage(src, material) {
       const img = new Image();
       img.crossOrigin = 'anonymous';
@@ -1495,7 +1485,6 @@
         tex.needsUpdate = true;
         material.map = tex;
         material.needsUpdate = true;
-        onTextureReady();
       };
       img.src = src;
     }
