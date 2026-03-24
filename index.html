@@ -1477,7 +1477,7 @@
     const envMap = pmremGenerator.fromScene(envScene).texture;
     scene.environment = envMap;
 
-    // Load textures — preloaded in <head>, should be instant from cache
+    // Load textures via native Image() first (Safari-friendly, uses browser cache)
     let texturesLoaded = 0;
     function onTextureReady() {
       texturesLoaded++;
@@ -1485,21 +1485,20 @@
         canvas.classList.add('loaded');
       }
     }
-    const textureLoader = new THREE.TextureLoader();
-    const frontTexture = textureLoader.load('assets/cover-front.png', (tex) => {
-      tex.encoding = THREE.sRGBEncoding;
-      frontMat.map = tex;
-      frontMat.needsUpdate = true;
-      onTextureReady();
-    });
-    const backTexture = textureLoader.load('assets/cover-back.png', (tex) => {
-      tex.encoding = THREE.sRGBEncoding;
-      backMat.map = tex;
-      backMat.needsUpdate = true;
-      onTextureReady();
-    });
-    frontTexture.encoding = THREE.sRGBEncoding;
-    backTexture.encoding = THREE.sRGBEncoding;
+
+    function loadTextureFromImage(src, material) {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = function() {
+        const tex = new THREE.Texture(img);
+        tex.encoding = THREE.sRGBEncoding;
+        tex.needsUpdate = true;
+        material.map = tex;
+        material.needsUpdate = true;
+        onTextureReady();
+      };
+      img.src = src;
+    }
 
     // Create digipak — a CD case with thickness
     const digipakGroup = new THREE.Group();
@@ -1533,6 +1532,10 @@
     backPanel.position.z = -(caseD / 2 + 0.001);
     backPanel.rotation.y = Math.PI;
     digipakGroup.add(backPanel);
+
+    // Load textures now that materials exist (Safari-friendly native Image approach)
+    loadTextureFromImage('assets/cover-front.png', frontMat);
+    loadTextureFromImage('assets/cover-back.png', backMat);
 
     // Spine / edges — the physical case body
     const edgeMat = new THREE.MeshPhysicalMaterial({
