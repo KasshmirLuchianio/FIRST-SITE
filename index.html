@@ -903,11 +903,44 @@
       transform: translateZ(0);
       -webkit-backface-visibility: hidden;
       backface-visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.4s ease;
     }
-    .video-card.revealed iframe {
-      opacity: 1;
+    /* YouTube lite embed */
+    .yt-lite {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      cursor: pointer;
+    }
+    .yt-lite img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .yt-play-btn {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 68px; height: 48px;
+      background: #ff0000;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, transform 0.2s;
+      pointer-events: none;
+    }
+    .yt-lite:hover .yt-play-btn {
+      background: #cc0000;
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+    .yt-play-btn::after {
+      content: '';
+      border-style: solid;
+      border-width: 10px 0 10px 18px;
+      border-color: transparent transparent transparent #fff;
+      margin-left: 4px;
     }
     .video-card .video-info {
       padding: 20px 24px;
@@ -1280,7 +1313,10 @@
     <div class="video-grid">
       <div class="video-card reveal">
         <div class="video-wrapper">
-          <iframe src="https://www.youtube.com/embed/Ok7JcE1aQVM" title="Kashmir Luchiano" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          <div class="yt-lite" data-id="Ok7JcE1aQVM">
+            <img src="https://i.ytimg.com/vi/Ok7JcE1aQVM/hqdefault.jpg" alt="De La Card" loading="lazy">
+            <button class="yt-play-btn" aria-label="Play video"></button>
+          </div>
         </div>
         <div class="video-info">
           <div class="video-number">#01</div>
@@ -1289,7 +1325,10 @@
       </div>
       <div class="video-card reveal">
         <div class="video-wrapper">
-          <iframe src="https://www.youtube.com/embed/FUps-0Wsw80" title="Kashmir Luchiano" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          <div class="yt-lite" data-id="FUps-0Wsw80">
+            <img src="https://i.ytimg.com/vi/FUps-0Wsw80/hqdefault.jpg" alt="Chef" loading="lazy">
+            <button class="yt-play-btn" aria-label="Play video"></button>
+          </div>
         </div>
         <div class="video-info">
           <div class="video-number">#02</div>
@@ -1298,7 +1337,10 @@
       </div>
       <div class="video-card reveal">
         <div class="video-wrapper">
-          <iframe src="https://www.youtube.com/embed/UpL-WthHJio" title="Kashmir Luchiano - Habar N-Ai" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          <div class="yt-lite" data-id="UpL-WthHJio">
+            <img src="https://i.ytimg.com/vi/UpL-WthHJio/hqdefault.jpg" alt="Habar N-Ai" loading="lazy">
+            <button class="yt-play-btn" aria-label="Play video"></button>
+          </div>
         </div>
         <div class="video-info">
           <div class="video-number">#03</div>
@@ -1332,7 +1374,10 @@
     <div class="video-grid" style="margin-top: 32px;">
       <div class="video-card reveal">
         <div class="video-wrapper">
-          <iframe src="https://www.youtube.com/embed/76xIjFF-TSg" title="Kashmir Luchiano" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          <div class="yt-lite" data-id="76xIjFF-TSg">
+            <img src="https://i.ytimg.com/vi/76xIjFF-TSg/hqdefault.jpg" alt="Io Sunt Kashmir" loading="lazy">
+            <button class="yt-play-btn" aria-label="Play video"></button>
+          </div>
         </div>
         <div class="video-info">
           <div class="video-number">#01</div>
@@ -1341,7 +1386,10 @@
       </div>
       <div class="video-card reveal">
         <div class="video-wrapper">
-          <iframe src="https://www.youtube.com/embed/8Kv4rIoFMa4" title="Kashmir Luchiano" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          <div class="yt-lite" data-id="8Kv4rIoFMa4">
+            <img src="https://i.ytimg.com/vi/8Kv4rIoFMa4/hqdefault.jpg" alt="Lamine Yamal" loading="lazy">
+            <button class="yt-play-btn" aria-label="Play video"></button>
+          </div>
         </div>
         <div class="video-info">
           <div class="video-number">#02</div>
@@ -1350,7 +1398,10 @@
       </div>
       <div class="video-card reveal">
         <div class="video-wrapper">
-          <iframe src="https://www.youtube.com/embed/qGNK_gKdZck" title="Kashmir Luchiano" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          <div class="yt-lite" data-id="qGNK_gKdZck">
+            <img src="https://i.ytimg.com/vi/qGNK_gKdZck/hqdefault.jpg" alt="La Mine In Zona" loading="lazy">
+            <button class="yt-play-btn" aria-label="Play video"></button>
+          </div>
         </div>
         <div class="video-info">
           <div class="video-number">#03</div>
@@ -1359,7 +1410,10 @@
       </div>
       <div class="video-card reveal">
         <div class="video-wrapper">
-          <iframe src="https://www.youtube.com/embed/fvIfYPgnS2c" title="Kashmir Luchiano" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          <div class="yt-lite" data-id="fvIfYPgnS2c">
+            <img src="https://i.ytimg.com/vi/fvIfYPgnS2c/hqdefault.jpg" alt="Fumando Weed" loading="lazy">
+            <button class="yt-play-btn" aria-label="Play video"></button>
+          </div>
         </div>
         <div class="video-info">
           <div class="video-number">#04</div>
@@ -1368,7 +1422,10 @@
       </div>
       <div class="video-card reveal">
         <div class="video-wrapper">
-          <iframe src="https://www.youtube.com/embed/3nGIPZFbgzE" title="Kashmir Luchiano" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          <div class="yt-lite" data-id="3nGIPZFbgzE">
+            <img src="https://i.ytimg.com/vi/3nGIPZFbgzE/hqdefault.jpg" alt="Despre Mine" loading="lazy">
+            <button class="yt-play-btn" aria-label="Play video"></button>
+          </div>
         </div>
         <div class="video-info">
           <div class="video-number">#05</div>
@@ -1377,7 +1434,10 @@
       </div>
       <div class="video-card reveal">
         <div class="video-wrapper">
-          <iframe src="https://www.youtube.com/embed/N71k6MbbMSY" title="Kashmir Luchiano" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          <div class="yt-lite" data-id="N71k6MbbMSY">
+            <img src="https://i.ytimg.com/vi/N71k6MbbMSY/hqdefault.jpg" alt="Ma Jolie" loading="lazy">
+            <button class="yt-play-btn" aria-label="Play video"></button>
+          </div>
         </div>
         <div class="video-info">
           <div class="video-number">#06</div>
@@ -1386,7 +1446,10 @@
       </div>
       <div class="video-card reveal">
         <div class="video-wrapper">
-          <iframe src="https://www.youtube.com/embed/iEkqAi5AQcE" title="Kashmir Luchiano" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          <div class="yt-lite" data-id="iEkqAi5AQcE">
+            <img src="https://i.ytimg.com/vi/iEkqAi5AQcE/hqdefault.jpg" alt="Imagine" loading="lazy">
+            <button class="yt-play-btn" aria-label="Play video"></button>
+          </div>
         </div>
         <div class="video-info">
           <div class="video-number">#07</div>
@@ -1725,8 +1788,20 @@
       trackObserver.observe(item);
     });
 
+    // YouTube lite embed — create iframe on click
+    document.querySelectorAll('.yt-lite').forEach(el => {
+      el.addEventListener('click', () => {
+        const id = el.dataset.id;
+        const iframe = document.createElement('iframe');
+        iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1`;
+        iframe.title = 'Kashmir Luchiano';
+        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+        iframe.allowFullscreen = true;
+        el.replaceWith(iframe);
+      });
+    });
+
     // Video cards — each grid animates independently
-    // Hide iframes during animation, reveal after completion
     document.querySelectorAll('.video-grid').forEach(grid => {
       const cards = grid.querySelectorAll('.video-card');
       gsap.set(cards, { y: 30, opacity: 0 });
