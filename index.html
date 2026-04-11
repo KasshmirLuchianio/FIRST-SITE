@@ -332,6 +332,110 @@
       display: none;
     }
 
+    /* === POPUP === */
+    .site-popup-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      animation: popFadeIn 0.4s ease forwards;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    @keyframes popFadeIn {
+      to { opacity: 1; }
+    }
+    .site-popup-overlay.closing {
+      animation: popFadeOut 0.3s ease forwards;
+    }
+    @keyframes popFadeOut {
+      to { opacity: 0; }
+    }
+    .site-popup {
+      background: linear-gradient(145deg, #0f1d35, #0a1628);
+      border: 1px solid rgba(192, 200, 216, 0.15);
+      border-radius: 24px;
+      padding: 40px 36px;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+      transform: scale(0.9) translateY(20px);
+      animation: popSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+    }
+    @keyframes popSlideIn {
+      to { transform: scale(1) translateY(0); }
+    }
+    .site-popup-icon {
+      width: 56px;
+      height: 56px;
+      margin: 0 auto 20px;
+      background: rgba(255, 0, 0, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .site-popup-icon svg {
+      width: 28px;
+      height: 28px;
+    }
+    .site-popup-title {
+      font-family: 'SuperstarM54', var(--font-heading);
+      font-size: 1.1rem;
+      color: #f0f4ff;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .site-popup-subtitle {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 28px;
+      line-height: 1.5;
+    }
+    .site-popup-btns {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .site-popup-btn {
+      display: block;
+      padding: 14px 24px;
+      border-radius: 100px;
+      text-decoration: none;
+      font-family: 'SuperstarM54', var(--font-heading);
+      font-size: 0.75rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .site-popup-btn.primary {
+      background: rgba(255, 0, 0, 0.15);
+      border: 1px solid rgba(255, 0, 0, 0.35);
+      color: #ff4444;
+    }
+    .site-popup-btn.primary:hover {
+      background: rgba(255, 0, 0, 0.25);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(255, 0, 0, 0.15);
+    }
+    .site-popup-btn.secondary {
+      background: transparent;
+      border: 1px solid rgba(192, 200, 216, 0.2);
+      color: #c0c8d8;
+    }
+    .site-popup-btn.secondary:hover {
+      border-color: rgba(192, 200, 216, 0.4);
+      color: #fff;
+    }
+
     .hero-3d-wrapper {
       position: relative;
       z-index: 2;
@@ -1147,6 +1251,21 @@
     </div>
   </nav>
 
+  <!-- POPUP — BRR | Orange Session -->
+  <div class="site-popup-overlay" id="sitePopup">
+    <div class="site-popup">
+      <div class="site-popup-icon">
+        <svg viewBox="0 0 24 24" fill="#ff0000"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+      </div>
+      <div class="site-popup-title">BRR | Orange Session</div>
+      <div class="site-popup-subtitle">Asculta acum noul single pe YouTube</div>
+      <div class="site-popup-btns">
+        <a href="https://www.youtube.com/watch?v=hFRKruQS8IY" target="_blank" class="site-popup-btn primary" id="popupYes">Asculta pe YouTube</a>
+        <button class="site-popup-btn secondary" id="popupNo">Raman pe site</button>
+      </div>
+    </div>
+  </div>
+
   <!-- MOBILE NAV -->
   <div class="mobile-nav" id="mobileNav">
     <a href="#hero" onclick="closeMobileNav()">ACASA</a>
@@ -1280,10 +1399,19 @@
     <div class="video-grid">
       <div class="video-card reveal">
         <div class="video-wrapper">
-          <iframe src="https://www.youtube.com/embed/Ok7JcE1aQVM" title="Kashmir Luchiano" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          <iframe src="https://www.youtube.com/embed/hFRKruQS8IY" title="Kashmir Luchiano - BRR | Orange Session" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
         </div>
         <div class="video-info">
           <div class="video-number">#01</div>
+          <div class="video-title">BRR | Orange Session</div>
+        </div>
+      </div>
+      <div class="video-card reveal">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/Ok7JcE1aQVM" title="Kashmir Luchiano" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-info">
+          <div class="video-number">#02</div>
           <div class="video-title">De La Card</div>
         </div>
       </div>
@@ -1292,7 +1420,7 @@
           <iframe src="https://www.youtube.com/embed/FUps-0Wsw80" title="Kashmir Luchiano" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
         </div>
         <div class="video-info">
-          <div class="video-number">#02</div>
+          <div class="video-number">#03</div>
           <div class="video-title">Chef</div>
         </div>
       </div>
@@ -1301,17 +1429,8 @@
           <iframe src="https://www.youtube.com/embed/UpL-WthHJio" title="Kashmir Luchiano - Habar N-Ai" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
         </div>
         <div class="video-info">
-          <div class="video-number">#03</div>
-          <div class="video-title">Habar N-Ai</div>
-        </div>
-      </div>
-      <div class="video-card reveal">
-        <div class="video-wrapper">
-          <iframe src="https://www.youtube.com/embed/hFRKruQS8IY" title="Kashmir Luchiano - BRR | Orange Session" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
-        </div>
-        <div class="video-info">
           <div class="video-number">#04</div>
-          <div class="video-title">BRR | Orange Session</div>
+          <div class="video-title">Habar N-Ai</div>
         </div>
       </div>
     </div>
@@ -1426,6 +1545,18 @@
     window.scrollTo(0, 0);
     // Safari sometimes restores scroll after paint — force again on load
     window.addEventListener('load', () => { window.scrollTo(0, 0); });
+
+    // === POPUP ===
+    const popupOverlay = document.getElementById('sitePopup');
+    function closePopup() {
+      popupOverlay.classList.add('closing');
+      setTimeout(() => { popupOverlay.remove(); }, 300);
+    }
+    document.getElementById('popupNo').addEventListener('click', closePopup);
+    document.getElementById('popupYes').addEventListener('click', closePopup);
+    popupOverlay.addEventListener('click', (e) => {
+      if (e.target === popupOverlay) closePopup();
+    });
 
     // === NAVBAR SCROLL ===
     window.addEventListener('scroll', () => {
