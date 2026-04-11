@@ -97,16 +97,16 @@
   </script>
 
   <!-- Preload 3D textures — start download + decode in <head> before anything else -->
-  <link rel="preload" href="assets/cover-front.png" as="image">
-  <link rel="preload" href="assets/cover-back.png" as="image">
+  <link rel="preload" href="assets/cover-front.jpg" as="image">
+  <link rel="preload" href="assets/cover-back.jpg" as="image">
   <script>
     // Load images as early as possible so they're ready when Three.js needs them
     window.__coverFront = new Image();
     window.__coverFront.crossOrigin = 'anonymous';
-    window.__coverFront.src = 'assets/cover-front.png';
+    window.__coverFront.src = 'assets/cover-front.jpg';
     window.__coverBack = new Image();
     window.__coverBack.crossOrigin = 'anonymous';
-    window.__coverBack.src = 'assets/cover-back.png';
+    window.__coverBack.src = 'assets/cover-back.jpg';
     // Force scroll to top immediately (Safari fix)
     if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
     window.scrollTo(0, 0);
@@ -455,7 +455,7 @@
       position: relative;
       padding: 120px 32px;
       overflow: hidden;
-      background: url('assets/cover-back.png') center center / cover no-repeat;
+      background: url('assets/cover-back.jpg') center center / cover no-repeat;
     }
     #album::before {
       content: '';
