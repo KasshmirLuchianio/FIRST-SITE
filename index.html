@@ -336,6 +336,26 @@
       height: 100%;
       min-height: 500px;
     }
+    .hero-3d-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 1;
+      transition: opacity 0.5s ease;
+    }
+    .hero-3d-placeholder img {
+      max-width: 60%;
+      max-height: 80%;
+      object-fit: contain;
+      border-radius: 8px;
+      opacity: 0.6;
+    }
+    .hero-3d-wrapper.canvas-ready .hero-3d-placeholder {
+      opacity: 0;
+    }
     #hero3d {
       position: absolute;
       inset: 0;
@@ -1195,7 +1215,7 @@
     </div>
     <div class="hero-content">
       <div class="hero-title-img">
-        <img src="assets/gigi-gazon-font.webp" alt="Gigi Gazon" loading="lazy" />
+        <img src="assets/gigi-gazon-font.webp" alt="Gigi Gazon" />
       </div>
       <h1 class="hero-title" style="font-size:0;height:0;overflow:hidden;margin:0;">GIGI GAZON — Kashmir Luchiano</h1>
       <div class="hero-socials">
@@ -1223,6 +1243,9 @@
     </div>
     <div class="hero-separator"></div>
     <div class="hero-3d-wrapper">
+      <div class="hero-3d-placeholder">
+        <img src="assets/cover-front.jpg" alt="" aria-hidden="true">
+      </div>
       <canvas id="hero3d"></canvas>
     </div>
   </section>
@@ -1660,6 +1683,8 @@
 
     // Render first frame immediately — digipak visible with placeholder color
     renderer.render(scene, camera);
+    // Hide cover placeholder once canvas is ready
+    wrapper.classList.add('canvas-ready');
 
     // === DRAG TO ROTATE (no zoom, no scroll capture) ===
     let isDragging = false;
