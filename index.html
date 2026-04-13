@@ -163,6 +163,7 @@
       scroll-behavior: smooth;
       scrollbar-width: thin;
       scrollbar-color: var(--accent) var(--bg-primary);
+      overflow-x: hidden;
     }
 
     body {
@@ -373,7 +374,6 @@
       justify-content: center;
       margin-left: auto;
       margin-right: auto;
-      padding-left: 40px;
     }
     .hero-badge {
       display: inline-block;
@@ -876,9 +876,8 @@
       content: '';
       position: absolute;
       top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100vw;
+      left: -32px;
+      width: calc(100% + 64px);
       height: 1px;
       background: rgba(255,255,255,0.15);
     }
@@ -1128,10 +1127,45 @@
       .balloon-title { max-width: 280px; }
       .balloon-label-large { max-width: 250px; }
 
-      .promo-video-section { width: 100vw; margin-left: calc(-50vw + 50%); }
+      .promo-video-section { width: 100%; margin-left: 0; }
       .promo-stats-left { top: 8px; left: 10px; }
       .promo-stats-right { bottom: 8px; right: 10px; }
       .promo-stat-line { font-size: clamp(1.1rem, 4.5vw, 1.6rem); letter-spacing: 3px; }
+    }
+
+    /* === TABLET (769px–1024px) — Samsung Fold, Galaxy Tab portrait, large phones === */
+    @media (min-width: 769px) and (max-width: 1024px) {
+      #hero {
+        grid-template-columns: 1fr;
+        padding: 100px 32px 40px;
+        min-height: auto;
+        gap: 0;
+      }
+      .hero-3d-wrapper { min-height: 320px; max-height: 360px; order: 0; margin-bottom: 0; overflow: hidden; }
+      .hero-separator { display: block; order: 1; width: 100%; height: 1px; background: rgba(255,255,255,0.15); margin: 16px 0; }
+      .hero-content {
+        order: 2;
+        text-align: center;
+        align-items: center;
+        padding-left: 0;
+        padding-right: 0;
+        margin: 0 auto;
+        max-width: 600px;
+        width: 100%;
+      }
+      .hero-title-img { max-width: 380px; width: 70%; margin: 0 auto 20px; }
+      .hero-socials { justify-content: center; flex-wrap: wrap; gap: 12px; }
+      .social-btn { padding: 12px 20px; }
+
+      .nav-links { display: none; }
+      .nav-mobile-toggle { display: flex; }
+
+      .promo-video-section { width: 100%; }
+      .video-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+
+      #muzica::before { left: -32px; width: calc(100% + 64px); }
+
+      .renascut-hero { grid-template-columns: 220px 1fr; gap: 24px; }
     }
 
     /* === MOBILE NAV DRAWER === */
