@@ -1169,9 +1169,133 @@
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: var(--bg-primary); }
     ::-webkit-scrollbar-thumb { background: var(--accent-2); border-radius: 3px; }
+
+    /* === RELEASE POPUP === */
+    #release-popup {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(3, 8, 18, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      animation: popupFadeIn 0.4s ease;
+    }
+    @keyframes popupFadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    #release-popup.hiding {
+      animation: popupFadeOut 0.3s ease forwards;
+    }
+    @keyframes popupFadeOut {
+      from { opacity: 1; }
+      to   { opacity: 0; }
+    }
+    .popup-card {
+      background: linear-gradient(160deg, #0d1e38 0%, #070f1e 100%);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 24px;
+      padding: 40px 32px 32px;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+      animation: cardSlideUp 0.4s cubic-bezier(0.16,1,0.3,1);
+    }
+    @keyframes cardSlideUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to   { transform: translateY(0);    opacity: 1; }
+    }
+    .popup-yt-icon {
+      width: 56px;
+      height: 56px;
+      background: rgba(255,0,0,0.12);
+      border: 1px solid rgba(255,0,0,0.25);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .popup-yt-icon svg {
+      width: 26px;
+      height: 26px;
+    }
+    .popup-title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.8rem, 6vw, 2.6rem);
+      letter-spacing: 4px;
+      color: var(--text-primary);
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+    .popup-title span {
+      color: var(--accent);
+    }
+    .popup-sub {
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin-bottom: 28px;
+      letter-spacing: 0.5px;
+    }
+    .popup-btn-yt {
+      display: block;
+      width: 100%;
+      padding: 15px 24px;
+      background: rgba(180,0,0,0.35);
+      border: 1px solid rgba(255,0,0,0.4);
+      border-radius: 12px;
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      letter-spacing: 3px;
+      color: #ff4444;
+      text-decoration: none;
+      margin-bottom: 12px;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .popup-btn-yt:hover {
+      background: rgba(200,0,0,0.5);
+      border-color: rgba(255,0,0,0.7);
+    }
+    .popup-btn-stay {
+      display: block;
+      width: 100%;
+      padding: 15px 24px;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 12px;
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      letter-spacing: 3px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .popup-btn-stay:hover {
+      border-color: rgba(255,255,255,0.35);
+      color: var(--text-primary);
+    }
   </style>
 </head>
 <body>
+
+  <!-- RELEASE POPUP -->
+  <div id="release-popup">
+    <div class="popup-card">
+      <div class="popup-yt-icon">
+        <svg viewBox="0 0 24 24" fill="#ff0000"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+      </div>
+      <div class="popup-title">BRR &nbsp;<span>ORANGE SESSION</span></div>
+      <div class="popup-sub">Asculta acum noul single pe YouTube</div>
+      <a href="https://youtu.be/hFRKruQS8IY?is=XRT-bG-kzaI-JpUC" target="_blank" class="popup-btn-yt" id="popup-yt-btn">ASCULTA PE YOUTUBE</a>
+      <button class="popup-btn-stay" id="popup-stay-btn">RAMAN PE SITE</button>
+    </div>
+  </div>
 
   <!-- GLOBAL SMOKE VIDEO BACKGROUND -->
   <video class="global-video-bg" autoplay muted loop playsinline>
@@ -1501,6 +1625,24 @@
     window.scrollTo(0, 0);
     // Safari sometimes restores scroll after paint — force again on load
     window.addEventListener('load', () => { window.scrollTo(0, 0); });
+
+    // === RELEASE POPUP ===
+    (function() {
+      var popup = document.getElementById('release-popup');
+      var stayBtn = document.getElementById('popup-stay-btn');
+      var ytBtn = document.getElementById('popup-yt-btn');
+      function closePopup() {
+        popup.classList.add('hiding');
+        setTimeout(function() { popup.remove(); }, 300);
+        sessionStorage.setItem('brr-popup-seen', '1');
+      }
+      if (sessionStorage.getItem('brr-popup-seen')) {
+        popup.remove();
+      } else {
+        stayBtn.addEventListener('click', closePopup);
+        ytBtn.addEventListener('click', closePopup);
+      }
+    })();
 
     // === NAVBAR SCROLL ===
     window.addEventListener('scroll', () => {
